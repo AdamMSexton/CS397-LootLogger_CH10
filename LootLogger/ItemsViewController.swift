@@ -10,6 +10,13 @@ class ItemsViewController: UITableViewController {
 
     var itemStore: ItemStore!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 65
+    }
+    
     @IBAction func addNewItem(_ sender: UIButton) {
         // Create a new item and add it to the store
         let newItem = itemStore.createItem()
@@ -71,17 +78,29 @@ class ItemsViewController: UITableViewController {
             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         // Get a new or recycled cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell",
-            for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell",
+                                                     for: indexPath) as! ItemCell
 
-        // Set the text on the cell with the description of the item
-        // that is at the nth index of items, where n = row this cell
-        // will appear in on the table view
+            // Set the text on the cell with the description of the item
+            // that is at the nth index of items, where n = row this cell
+            // will appear in on the tableview
         let item = itemStore.allItems[indexPath.row]
 
-        cell.textLabel?.text = item.name
-        cell.detailTextLabel?.text = "$\(item.valueInDollars)"
-
+        // Configure the cell with the Item
+        cell.nameLabel.text = item.name
+        cell.serialNumberLabel.text = item.serialNumber
+        cell.valueLabel.text = "$\(item.valueInDollars)"
+        
+        //Unwrap, remove useless characters and $'s, then compare double value to determine color.
+        if let text = cell.valueLabel.text?.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "$", with: ""),
+        
+            let value = Double(text){
+            if  value > 50.0{
+                cell.valueLabel.textColor = .systemGreen
+            } else {
+                cell.valueLabel.textColor = .systemRed
+            }
+        }
         return cell
     }
 }
