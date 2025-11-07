@@ -41,7 +41,7 @@ class Item: Equatable{
             let randomSerialNumber =
                 UUID().uuidString.components(separatedBy: "-").first!
 
-            self.init(name: randomName,
+            self.init(name: randomName + " EXTRA WORDS SO WE CAN SEE SILVER CHALLENGE WRPPING.",
                       serialNumber: randomSerialNumber,
                       valueInDollars: randomValue)
         } else {

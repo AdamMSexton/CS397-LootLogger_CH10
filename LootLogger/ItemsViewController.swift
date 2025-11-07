@@ -14,7 +14,7 @@ class ItemsViewController: UITableViewController {
         super.viewDidLoad()
 
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 65
+        tableView.estimatedRowHeight = 60
     }
     
     @IBAction func addNewItem(_ sender: UIButton) {
